@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Temperature:</strong>
+  <%= @point.temperature %>
+</p>
+
+<p>
+  <strong>Pm25:</strong>
+  <%= @point.pm25 %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @point.group %>
+</p>
+
+<%= link_to 'Edit', edit_point_path(@point) %> |
+<%= link_to 'Back', points_path %>
