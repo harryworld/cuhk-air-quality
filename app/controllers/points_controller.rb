@@ -7,6 +7,13 @@ class PointsController < ApplicationController
     @points = Point.all
   end
 
+  def latest
+    last_update = Time.at(params[:last_update_ts].to_i / 1000).to_datetime unless params[:last_update_ts].nil?
+
+    @points = Point.where 'created_at > :last_update', :last_update => last_update
+    render :index
+  end
+
   # GET /points/1
   # GET /points/1.json
   def show
