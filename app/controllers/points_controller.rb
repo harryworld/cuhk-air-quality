@@ -8,9 +8,11 @@ class PointsController < ApplicationController
   end
 
   def latest
-    last_update = Time.at(params[:last_update_ts].to_i / 1000).to_datetime unless params[:last_update_ts].nil?
-
-    @points = Point.where 'created_at > :last_update', :last_update => last_update
+    unless params[:id].nil?
+      @points = Point.where 'id > :last_id', :last_id => params[:id]
+    else
+      @points = Point.last(20)
+    end
     render :index
   end
 

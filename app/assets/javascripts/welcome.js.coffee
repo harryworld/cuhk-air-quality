@@ -6,14 +6,15 @@ ts = 0
 series = undefined
 
 loadData = ->
-  $.getJSON "/points/latest.json?last_update_ts=#{ts}", (data) ->
+  # ts = (new Date()).getTime()
+  $.getJSON "/points/latest.json?id=#{ts}", (data) ->
     $.each data, (k, v) ->
-      ts = v.created_ts
+      ts = v.id
       add v.created_ts, v.temperature
 
 add = (x, y) ->
   console.log x, y
-  x = (new Date()).getTime() # current time
+  # x = (new Date()).getTime() # current time
   # y = Math.random()
   series.addPoint [
     x
@@ -21,27 +22,24 @@ add = (x, y) ->
   ], true, true
   return
 
-generate = ->
-
-  # generate an array of random data
-  data = []
-  time = (new Date()).getTime()
-  i = undefined
-  i = -19
-  while i <= 0
-    data.push
-      x: time + i * 1000
-      y: Math.random() * 30
-
-    i += 1
-  data
-
-# 2.
 $ ->
-  $(document).ready ->
-    Highcharts.setOptions
-      global:
-        useUTC: false
+  Highcharts.setOptions
+    global:
+      useUTC: false
+
+  $.getJSON "/points/latest.json", (data) ->
+    generate = ->
+      # generate an array of random data
+      results = []
+
+      $.each data, (k, v) ->
+        ts = v.id
+        time = v.created_ts
+        results.push
+          x: time
+          y: v.temperature
+
+      results
 
     $("#container").highcharts
       chart:
@@ -54,7 +52,6 @@ $ ->
             # set up the updating of the chart each second
             series = @series[0]
             setInterval loadData, 1000
-            # loadData()
             return
 
       title:
@@ -88,7 +85,3 @@ $ ->
         name: "Random data"
         data: generate()
       ]
-
-    return
-
-  return
