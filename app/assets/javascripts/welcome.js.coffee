@@ -4,10 +4,18 @@
 
 ts = 0
 series = undefined
+start = (new Date()).getTime()
 
 loadData = ->
   # ts = (new Date()).getTime()
   $.getJSON "/points/latest.json?id=#{ts}", (data) ->
+    if data.length == 0
+      currentTime = (new Date()).getTime()
+      if (currentTime - start) > 5000
+        add start, Math.random() * 30
+        start = currentTime
+      return
+
     $.each data, (k, v) ->
       ts = v.id
       add v.created_ts, v.temperature
