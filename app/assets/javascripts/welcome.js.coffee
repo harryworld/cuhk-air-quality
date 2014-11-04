@@ -11,7 +11,7 @@ loadData = ->
   $.getJSON "/points/latest.json?id=#{ts}", (data) ->
     if data.length == 0
       currentTime = (new Date()).getTime()
-      if (currentTime - start) > 5000
+      if (currentTime - start) > 2000
         add start, Math.random() * 30
         start = currentTime
       return
