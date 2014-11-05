@@ -55,7 +55,7 @@ $ ->
             return
 
       title:
-        text: "Live random data"
+        text: "Temperature Data"
 
       xAxis:
         type: "datetime"
@@ -63,7 +63,7 @@ $ ->
 
       yAxis:
         title:
-          text: "Value"
+          text: "Celsius"
 
         plotLines: [
           value: 0
