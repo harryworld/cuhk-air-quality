@@ -10,7 +10,7 @@ loadData = ->
   $.getJSON "/points/latest.json?id=#{ts}", (data) ->
     $.each data, (k, v) ->
       ts = v.id
-      add v.created_ts, v.temperature
+      add v.created_ts, v.pm25
 
 add = (x, y) ->
   console.log x, y
@@ -37,7 +37,7 @@ $ ->
         time = v.created_ts
         results.push
           x: time
-          y: v.temperature
+          y: v.pm25
 
       results
 
@@ -55,7 +55,7 @@ $ ->
             return
 
       title:
-        text: "Temperature Data"
+        text: "PM2.5 collected over time"
 
       xAxis:
         type: "datetime"
